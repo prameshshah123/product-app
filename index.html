@@ -84,3 +84,13 @@
   </script>
 </body>
 </html>
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("product");
+  const data = JSON.parse(e.postData.contents);
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+
+  const row = headers.map(h => data[h] || "");
+  sheet.appendRow(row);
+
+  return ContentService.createTextOutput("Saved").setMimeType(ContentService.MimeType.TEXT);
+}
