@@ -14,7 +14,6 @@
       <select name="Category" id="category" class="p-2 border rounded"><option>Loading category...</option></select>
       <select name="Coating" id="coating" class="p-2 border rounded"><option>Loading coating...</option></select>
       <select name="Print Size" id="print_size" class="p-2 border rounded"><option>Loading print size...</option></select>
-      <select name="Size" id="size" class="p-2 border rounded"><option>Loading size...</option></select>
       <select name="Paper" id="paper" class="p-2 border rounded"><option>Loading paper...</option></select>
       <select name="GSM" id="gsm" class="p-2 border rounded"><option>Loading GSM...</option></select>
       <select name="Delivery Address" id="del_add" class="p-2 border rounded"><option>Loading address...</option></select>
@@ -50,14 +49,13 @@
       const map = {
         category: 'category',
         coating: 'coating',
-        size: 'size',
+        print_size: 'size', // "Print Size" uses values from "size" sheet
         paper: 'paper',
         gsm: 'gsm',
         del_add: 'del add',
         construction: 'construction',
         specification: 'specification',
-        customer: 'customer',
-        print_size: 'size' // Print Size uses values from 'size' sheet
+        customer: 'customer'
       };
       Object.entries(map).forEach(([id, sheetName]) => {
         const select = document.getElementById(id);
