@@ -1,5 +1,65 @@
 <!DOCTYPE html>
-<html>
-  <head><title>Test</title></head>
-  <body><h1>Hello Pramesh</h1></body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Add Product</h1>
+    <form id="productForm" class="space-y-4">
+      <input name="name" placeholder="Product Name" class="w-full p-2 border rounded" />
+      <input name="ink" placeholder="Ink" class="w-full p-2 border rounded" />
+      <input name="plate_no" placeholder="Plate No" class="w-full p-2 border rounded" />
+
+      <select name="category" class="w-full p-2 border rounded">
+        <option value="">Select Category</option>
+        <option>Brochure</option>
+        <option>Label</option>
+        <option>Carton</option>
+      </select>
+
+      <select name="gsm" class="w-full p-2 border rounded">
+        <option value="">Select GSM</option>
+        <option>80 GSM</option>
+        <option>100 GSM</option>
+      </select>
+
+      <select name="paper_type" class="w-full p-2 border rounded">
+        <option value="">Select Paper Type</option>
+        <option>Glossy</option>
+        <option>Matte</option>
+      </select>
+
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Product</button>
+    </form>
+
+    <div class="mt-6 space-x-2">
+      <a href="https://wa.me/?text=New+Product+Added" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">WhatsApp</a>
+      <a href="https://your-coa-link.com" target="_blank" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Generate COA</a>
+      <a href="https://your-shade-card-link.com" target="_blank" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">Shade Card</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('productForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      const res = await fetch('https://script.google.com/macros/s/AKfycbwASLqNSLGNEq_Y6qTx5Lmx9H_FNiq8a_yeZoVQZFM/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (res.ok) {
+        alert('Product saved!');
+        form.reset();
+      } else {
+        alert('Error saving product');
+      }
+    });
+  </script>
+</body>
 </html>
