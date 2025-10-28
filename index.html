@@ -13,6 +13,7 @@
 
       <select name="Category" id="category" class="p-2 border rounded"><option>Loading category...</option></select>
       <select name="Coating" id="coating" class="p-2 border rounded"><option>Loading coating...</option></select>
+      <select name="Print Size" id="print_size" class="p-2 border rounded"><option>Loading print size...</option></select>
       <select name="Size" id="size" class="p-2 border rounded"><option>Loading size...</option></select>
       <select name="Paper" id="paper" class="p-2 border rounded"><option>Loading paper...</option></select>
       <select name="GSM" id="gsm" class="p-2 border rounded"><option>Loading GSM...</option></select>
@@ -21,7 +22,6 @@
       <select name="Specification" id="specification" class="p-2 border rounded"><option>Loading specification...</option></select>
       <select name="Customer" id="customer" class="p-2 border rounded"><option>Loading customer...</option></select>
 
-      <input name="Print Size" placeholder="Print Size" class="p-2 border rounded" />
       <input name="Ups" placeholder="Ups" class="p-2 border rounded" />
       <input name="Dimension" placeholder="Dimension" class="p-2 border rounded" />
       <input name="Ink" placeholder="Ink" class="p-2 border rounded" />
@@ -56,7 +56,8 @@
         del_add: 'del add',
         construction: 'construction',
         specification: 'specification',
-        customer: 'customer'
+        customer: 'customer',
+        print_size: 'size' // Print Size uses values from 'size' sheet
       };
       Object.entries(map).forEach(([id, sheetName]) => {
         const select = document.getElementById(id);
