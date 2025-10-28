@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Manager</title>
+  <title>Product Form</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6">
   <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
     <h1 class="text-2xl font-bold mb-4">Add Product</h1>
     <form id="productForm" class="space-y-4">
-      <input name="product" id="product" placeholder="Product Name" class="w-full p-2 border rounded" />
+      <input name="product" placeholder="Product Name" class="w-full p-2 border rounded" />
 
       <select name="category" id="category" class="w-full p-2 border rounded"><option>Loading category...</option></select>
       <select name="coating" id="coating" class="w-full p-2 border rounded"><option>Loading coating...</option></select>
@@ -24,57 +22,44 @@
 
       <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Product</button>
     </form>
-
-    <div class="mt-6 space-x-2">
-      <a href="https://wa.me/?text=New+Product+Added" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">WhatsApp</a>
-      <a href="https://your-coa-link.com" target="_blank" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Generate COA</a>
-      <a href="https://your-shade-card-link.com" target="_blank" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">Shade Card</a>
-    </div>
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec';
+    const SCRIPT_URL = 'YOUR_SCRIPT_URL';
 
     async function loadDropdowns() {
-      try {
-        const res = await fetch(SCRIPT_URL + '?dropdown=true');
-        const data = await res.json();
-
-        const map = {
-          category: 'category',
-          coating: 'coating',
-          size: 'size',
-          paper_type: 'paper type',
-          gsm: 'gsm',
-          del_add: 'del add',
-          construction: 'construction',
-          specification: 'specification',
-          customer: 'customer'
-        };
-
-        Object.entries(map).forEach(([id, sheetName]) => {
-          const select = document.getElementById(id);
-          if (select && data[sheetName]) {
-            select.innerHTML = `<option value="">Select ${sheetName}</option>`;
-            data[sheetName].forEach(v => {
-              const opt = document.createElement('option');
-              opt.value = v;
-              opt.textContent = v;
-              select.appendChild(opt);
-            });
-          }
-        });
-      } catch (err) {
-        console.error("Dropdown load failed:", err);
-      }
+      const res = await fetch(SCRIPT_URL + '?dropdown=true');
+      const data = await res.json();
+      const map = {
+        category: 'category',
+        coating: 'coating',
+        size: 'size',
+        paper_type: 'paper type',
+        gsm: 'gsm',
+        del_add: 'del add',
+        construction: 'construction',
+        specification: 'specification',
+        customer: 'customer'
+      };
+      Object.entries(map).forEach(([id, sheetName]) => {
+        const select = document.getElementById(id);
+        if (select && data[sheetName]) {
+          select.innerHTML = `<option value="">Select ${sheetName}</option>`;
+          data[sheetName].forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v;
+            opt.textContent = v;
+            select.appendChild(opt);
+          });
+        }
+      });
     }
 
     loadDropdowns();
 
-    const form = document.getElementById('productForm');
-    form.addEventListener('submit', async (e) => {
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
+      const data = Object.fromEntries(new FormData(e.target).entries());
       const res = await fetch(SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -82,7 +67,7 @@
       });
       if (res.ok) {
         alert('Product saved!');
-        form.reset();
+        e.target.reset();
       } else {
         alert('Error saving product');
       }
@@ -90,11 +75,3 @@
   </script>
 </body>
 </html>
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("product");
-  const data = JSON.parse(e.postData.contents);
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const row = headers.map(h => data[h] || "");
-  sheet.appendRow(row);
-  return ContentService.createTextOutput("Saved").setMimeType(ContentService.MimeType.TEXT);
-}
