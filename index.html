@@ -7,31 +7,19 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6">
-  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
     <h1 class="text-2xl font-bold mb-4">Add Product</h1>
     <form id="productForm" class="space-y-4">
-      <input name="name" placeholder="Product Name" class="w-full p-2 border rounded" />
-      <input name="ink" placeholder="Ink" class="w-full p-2 border rounded" />
-      <input name="plate_no" placeholder="Plate No" class="w-full p-2 border rounded" />
-
-      <select name="category" class="w-full p-2 border rounded">
-        <option value="">Select Category</option>
-        <option>Brochure</option>
-        <option>Label</option>
-        <option>Carton</option>
-      </select>
-
-      <select name="gsm" class="w-full p-2 border rounded">
-        <option value="">Select GSM</option>
-        <option>80 GSM</option>
-        <option>100 GSM</option>
-      </select>
-
-      <select name="paper_type" class="w-full p-2 border rounded">
-        <option value="">Select Paper Type</option>
-        <option>Glossy</option>
-        <option>Matte</option>
-      </select>
+      <select name="product" id="product" class="w-full p-2 border rounded"><option>Loading product...</option></select>
+      <select name="category" id="category" class="w-full p-2 border rounded"><option>Loading category...</option></select>
+      <select name="coating" id="coating" class="w-full p-2 border rounded"><option>Loading coating...</option></select>
+      <select name="size" id="size" class="w-full p-2 border rounded"><option>Loading size...</option></select>
+      <select name="paper_type" id="paper_type" class="w-full p-2 border rounded"><option>Loading paper type...</option></select>
+      <select name="gsm" id="gsm" class="w-full p-2 border rounded"><option>Loading GSM...</option></select>
+      <select name="del_add" id="del_add" class="w-full p-2 border rounded"><option>Loading delivery address...</option></select>
+      <select name="construction" id="construction" class="w-full p-2 border rounded"><option>Loading construction...</option></select>
+      <select name="specification" id="specification" class="w-full p-2 border rounded"><option>Loading specification...</option></select>
+      <select name="customer" id="customer" class="w-full p-2 border rounded"><option>Loading customer...</option></select>
 
       <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save Product</button>
     </form>
@@ -44,11 +32,44 @@
   </div>
 
   <script>
+    async function loadDropdowns() {
+      const res = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?dropdown=true');
+      const data = await res.json();
+
+      const map = {
+        product: 'product',
+        category: 'category',
+        coating: 'coating',
+        size: 'size',
+        paper_type: 'paper type',
+        gsm: 'gsm',
+        del_add: 'del add',
+        construction: 'construction',
+        specification: 'specification',
+        customer: 'customer'
+      };
+
+      Object.entries(map).forEach(([id, sheetName]) => {
+        const select = document.getElementById(id);
+        if (select && data[sheetName]) {
+          select.innerHTML = `<option value="">Select ${sheetName}</option>`;
+          data[sheetName].forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v;
+            opt.textContent = v;
+            select.appendChild(opt);
+          });
+        }
+      });
+    }
+
+    loadDropdowns();
+
     const form = document.getElementById('productForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
-      const res = await fetch('https://script.google.com/macros/s/AKfycbwASLqNSLGNEq_Y6qTx5Lmx9H_FNiq8a_yeZoVQZFM/exec', {
+      const res = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
