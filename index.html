@@ -11,6 +11,7 @@
     <h1 class="text-2xl font-bold mb-4">Add Product</h1>
     <form id="productForm" class="space-y-4">
       <input name="product" id="product" placeholder="Product Name" class="w-full p-2 border rounded" />
+
       <select name="category" id="category" class="w-full p-2 border rounded"><option>Loading category...</option></select>
       <select name="coating" id="coating" class="w-full p-2 border rounded"><option>Loading coating...</option></select>
       <select name="size" id="size" class="w-full p-2 border rounded"><option>Loading size...</option></select>
@@ -32,35 +33,40 @@
   </div>
 
   <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec';
+
     async function loadDropdowns() {
-      const res = await fetch('https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec?dropdown=true');
-      console.log("Dropdown data:", data);
+      try {
+        const res = await fetch(SCRIPT_URL + '?dropdown=true');
+        const data = await res.json();
 
-      const map = {
-        product: 'product',
-        category: 'category',
-        coating: 'coating',
-        size: 'size',
-        paper_type: 'paper type',
-        gsm: 'gsm',
-        del_add: 'del add',
-        construction: 'construction',
-        specification: 'specification',
-        customer: 'customer'
-      };
+        const map = {
+          category: 'category',
+          coating: 'coating',
+          size: 'size',
+          paper_type: 'paper type',
+          gsm: 'gsm',
+          del_add: 'del add',
+          construction: 'construction',
+          specification: 'specification',
+          customer: 'customer'
+        };
 
-      Object.entries(map).forEach(([id, sheetName]) => {
-        const select = document.getElementById(id);
-        if (select && data[sheetName]) {
-          select.innerHTML = `<option value="">Select ${sheetName}</option>`;
-          data[sheetName].forEach(v => {
-            const opt = document.createElement('option');
-            opt.value = v;
-            opt.textContent = v;
-            select.appendChild(opt);
-          });
-        }
-      });
+        Object.entries(map).forEach(([id, sheetName]) => {
+          const select = document.getElementById(id);
+          if (select && data[sheetName]) {
+            select.innerHTML = `<option value="">Select ${sheetName}</option>`;
+            data[sheetName].forEach(v => {
+              const opt = document.createElement('option');
+              opt.value = v;
+              opt.textContent = v;
+              select.appendChild(opt);
+            });
+          }
+        });
+      } catch (err) {
+        console.error("Dropdown load failed:", err);
+      }
     }
 
     loadDropdowns();
@@ -69,7 +75,7 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
-      const res = await fetch('https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec', {
+      const res = await fetch(SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
@@ -84,13 +90,3 @@
   </script>
 </body>
 </html>
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("product");
-  const data = JSON.parse(e.postData.contents);
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-
-  const row = headers.map(h => data[h] || "");
-  sheet.appendRow(row);
-
-  return ContentService.createTextOutput("Saved").setMimeType(ContentService.MimeType.TEXT);
-}
