@@ -34,7 +34,7 @@
   <script>
     async function loadDropdowns() {
       const res = await fetch('https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec?dropdown=true');
-      const data = await res.json();
+      console.log("Dropdown data:", data);
 
       const map = {
         product: 'product',
