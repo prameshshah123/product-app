@@ -33,7 +33,7 @@
 
   <script>
     async function loadDropdowns() {
-      const res = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?dropdown=true');
+      const res = await fetch('https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec?dropdown=true');
       const data = await res.json();
 
       const map = {
@@ -69,7 +69,7 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
-      const res = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbyPue8tkQv3wmL2YldhpqeN9Ltmtivk4kmPAROasZgZBtVCNOVLS2pikhnIbqNwUA7s/exec', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
