@@ -5,34 +5,32 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6">
-  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
     <h1 class="text-2xl font-bold mb-4">Add Product</h1>
     <form id="productForm" class="grid grid-cols-2 gap-4">
       <input name="ProductID" placeholder="Product ID" class="p-2 border rounded" />
       <input name="Product Name" placeholder="Product Name" class="p-2 border rounded" />
 
       <select name="Category" id="category" class="p-2 border rounded"><option>Loading category...</option></select>
-      <select name="Customer" id="customer" class="p-2 border rounded"><option>Loading customer...</option></select>
-
-      <input name="Paper" placeholder="Paper" class="p-2 border rounded" />
+      <select name="Coating" id="coating" class="p-2 border rounded"><option>Loading coating...</option></select>
+      <select name="Size" id="size" class="p-2 border rounded"><option>Loading size...</option></select>
+      <select name="Paper" id="paper" class="p-2 border rounded"><option>Loading paper...</option></select>
       <select name="GSM" id="gsm" class="p-2 border rounded"><option>Loading GSM...</option></select>
+      <select name="Delivery Address" id="del_add" class="p-2 border rounded"><option>Loading address...</option></select>
+      <select name="Construction" id="construction" class="p-2 border rounded"><option>Loading construction...</option></select>
+      <select name="Specification" id="specification" class="p-2 border rounded"><option>Loading specification...</option></select>
+      <select name="Customer" id="customer" class="p-2 border rounded"><option>Loading customer...</option></select>
 
       <input name="Print Size" placeholder="Print Size" class="p-2 border rounded" />
       <input name="Ups" placeholder="Ups" class="p-2 border rounded" />
       <input name="Dimension" placeholder="Dimension" class="p-2 border rounded" />
       <input name="Ink" placeholder="Ink" class="p-2 border rounded" />
       <input name="Plate No" placeholder="Plate No" class="p-2 border rounded" />
-
-      <select name="Coating" id="coating" class="p-2 border rounded"><option>Loading coating...</option></select>
       <input name="Special Effects" placeholder="Special Effects" class="p-2 border rounded" />
       <input name="Pasting" placeholder="Pasting" class="p-2 border rounded" />
       <input name="folding Dim." placeholder="Folding Dim." class="p-2 border rounded" />
-
-      <select name="Construction" id="construction" class="p-2 border rounded"><option>Loading construction...</option></select>
-      <select name="Specification" id="specification" class="p-2 border rounded"><option>Loading specification...</option></select>
       <input name="Actual GSM USED" placeholder="Actual GSM Used" class="p-2 border rounded" />
       <input name="ArtworkCode" placeholder="Artwork Code" class="p-2 border rounded" />
-      <select name="Delivery Address" id="delivery_address" class="p-2 border rounded"><option>Loading address...</option></select>
       <input name="product image" placeholder="Product Image URL" class="p-2 border rounded" />
       <input name="ArtworkCDR" placeholder="Artwork CDR URL" class="p-2 border rounded" />
       <input name="ArtworkPDF" placeholder="Artwork PDF URL" class="p-2 border rounded" />
@@ -50,13 +48,15 @@
       const res = await fetch(SCRIPT_URL + '?dropdown=true');
       const data = await res.json();
       const map = {
-        category: 'Category',
-        coating: 'Coating',
-        gsm: 'GSM',
-        construction: 'Construction',
-        specification: 'Specification',
-        customer: 'Customer',
-        delivery_address: 'Delivery Address'
+        category: 'category',
+        coating: 'coating',
+        size: 'size',
+        paper: 'paper',
+        gsm: 'gsm',
+        del_add: 'del add',
+        construction: 'construction',
+        specification: 'specification',
+        customer: 'customer'
       };
       Object.entries(map).forEach(([id, sheetName]) => {
         const select = document.getElementById(id);
