@@ -1,6 +1,4 @@
 
--- AFTER users have logged in once, run this to assign roles.
--- Replace the SELECT ... WHERE email IN (...) if needed.
 WITH u AS (
   SELECT id, email FROM auth.users WHERE email IN ('creativepackaging2@gmail.com','saahilshah123@gmail.com','prameshshah@gmail.com','saahiljg@gmail.com')
 )

@@ -1,1 +1,22 @@
-:root{--accent:#0ea5a4}html,body,#__next{height:100%}body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;margin:0;padding:16px;background:#f7f7f8;color:#111}a{color:var(--accent)}.container{max-width:1100px;margin:0 auto}.card{background:#fff;padding:12px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}.input{padding:8px;border:1px solid #e6e6e6;border-radius:6px;width:100%} .button{padding:8px 12px;border-radius:6px;background:var(--accent);color:#fff;border:0;cursor:pointer}
+
+:root{--accent:#0ea5a4;--green:#10b981;--darkblue:#0b3d91;--muted:#6b7280}
+html,body,#__next{height:100%}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;margin:0;padding:0;background:#f3f4f6;color:#0f172a}
+.container{max-width:1200px;margin:20px auto;padding:0 16px}
+.app-layout{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--darkblue);color:#fff;padding:18px 10px;box-shadow:2px 0 8px rgba(2,6,23,0.08)}
+.sidebar .brand{font-weight:700;font-size:18px;padding:8px 12px;margin-bottom:12px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;margin:6px 4px;color:#cfe0ff;cursor:pointer}
+.nav-item.active{background:rgba(255,255,255,0.06);color:#fff}
+.content{flex:1;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card{background:#fff;padding:14px;border-radius:10px;box-shadow:0 1px 3px rgba(15,23,42,0.05);border:1px solid rgba(15,23,42,0.03)}
+.table{width:100%;border-collapse:collapse}
+.table th{font-weight:600;text-align:left;padding:12px 8px;border-bottom:1px solid #eef2f7;color:#111827}
+.table td{padding:12px 8px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+.product-name{font-weight:600;color:#0f172a}
+.artwork-code{font-size:12px;color:var(--muted)}
+.spec-row{font-size:13px;color:#374151;display:flex;gap:10px;flex-wrap:wrap}
+.spec-row .pill{background:#f8fafc;padding:6px 8px;border-radius:6px;border:1px solid #eef2f7;font-size:12px;color:#0f172a}
+.icon-btn{background:transparent;border:0;cursor:pointer;padding:6px;border-radius:6px}
+.add-btn{background:var(--green);color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+.search-input{padding:8px 10px;border-radius:8px;border:1px solid #e6e9ef;width:360px}
